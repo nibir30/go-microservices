@@ -21,8 +21,10 @@ func InitializeApp() *App {
 	// Initialize database connection
 	dbInstance := config.ConnectDB()
 
+
 	// Run database migrations
 	db.MigrateDB(dbInstance)
+
 
 	// Initialize container (repositories & services)
 	container := NewContainer(dbInstance)

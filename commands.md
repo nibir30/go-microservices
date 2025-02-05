@@ -3,11 +3,10 @@
 go mod init github.com/nibir30/go-microservice/auth
 ```
 
-# install gin
+# install all dependencies
 ```
-go get -u github.com/gin-gonic/gin
+go mod tidy
 ```
-
 # run
 ```
 go run main.go

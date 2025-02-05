@@ -12,12 +12,13 @@ import (
 const AuthServicePort = ":8001"
 
 //ConnectDB connects go to mysql database
-func ConnectDB() *gorm.DB {
+func ConnectDB() (*gorm.DB) {
 	errorENV := godotenv.Load("../.env")
 	if errorENV != nil {
 		panic("Failed to load env file")
-	}
 
+	}
+	
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 	dbHost := os.Getenv("DB_HOST")
@@ -34,6 +35,7 @@ func ConnectDB() *gorm.DB {
 	return db
 }
 
+
 //DisconnectDB is stopping your connection to mysql database
 func DisconnectDB(db *gorm.DB) {
 	dbSQL, err := db.DB()
@@ -44,3 +46,5 @@ func DisconnectDB(db *gorm.DB) {
 	}
 	dbSQL.Close()
 }
+
+// 	migrate -path "D:/Dev/Backend/go/go-microservices/auth/db/migrations" -database "mysql://root:13579@tcp(localhost:3306)/go_ms" up
