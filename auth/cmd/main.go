@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/config"
+	"github.com/nibir30/go-microservices/auth/internal/bootstrap"
 	"gorm.io/gorm"
 )
+
 
 
 var (
@@ -13,14 +14,8 @@ var (
 
 
 func main() {
+	app := bootstrap.InitializeApp()
 	defer config.DisconnectDB(db)
-	router := gin.Default()
-
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, World!",
-		})
-	})
-
-	router.Run(config.AuthServicePort)
+	
+	app.Router.Run(config.AuthServicePort)
 }
