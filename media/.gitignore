@@ -1,0 +1,47 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+.env
+
+# Output of `go build` and `go test`
+*.out
+
+# Dependency directories (vendor, if using vendoring)
+vendor/
+
+# Go module files
+go.sum
+go.work
+go.work.sum
+
+# Logs
+*.log
+
+# IDE or editor specific files
+.idea/
+.vscode/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test and coverage files
+*.test
+*.cover
+
+# Temporary files
+*.tmp
+*.temp
+
+# Debugging
+debug/
+
+# Gin-specific
+gin-bin/
+tmp/
+
+# Docker-related
+docker-compose.override.yml
