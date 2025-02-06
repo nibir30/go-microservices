@@ -5,6 +5,7 @@ import (
 
 	"github.com/nibir30/go-microservices/auth/config"
 	"github.com/nibir30/go-microservices/auth/db"
+	"github.com/nibir30/go-microservices/auth/internal/api/middleware"
 	"github.com/nibir30/go-microservices/auth/internal/api/routes"
 
 	"os/exec"
@@ -38,6 +39,8 @@ func InitializeApp() *App {
 	router := gin.Default()
 
 	InitializeSwagger(router)
+
+	router.Use(middleware.LogRequestAndResponse())
 
 	// Register routes with container services
 	routes.RegisterUserRoutes(router, container.UserService)
