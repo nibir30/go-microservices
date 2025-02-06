@@ -1,12 +1,14 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/internal/model"
 	"github.com/nibir30/go-microservices/auth/internal/service"
 )
+
 
 type UserHandler struct {
 	userService service.UserService
@@ -49,10 +51,13 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("User:", user)
+
 	if err := h.userService.CreateUser(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
+
 
 	c.JSON(http.StatusCreated, user)
 }
