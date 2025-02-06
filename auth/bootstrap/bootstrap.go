@@ -44,7 +44,7 @@ func InitializeApp() *App {
 	router.Use(middleware.DefaultErrorHandler())
 
 	// Register routes with container services
-	routes.RegisterUserRoutes(router, container.UserService)
+	routes.RegisterUserRoutes(router, container.UserService, container.AuthService)
 
 	// If you have more routes, register them here:
 	// routes.RegisterOrderRoutes(router, container.OrderService)
@@ -63,6 +63,8 @@ func InitializeSwagger(router *gin.Engine) {
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println("Error running swag init:", err)
+	} else {
+		fmt.Println("Swagger initialized successfully")
 	}
 
 	docs.SwaggerInfo.BasePath = "/api/v1"

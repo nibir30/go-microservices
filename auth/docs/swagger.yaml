@@ -1,4 +1,21 @@
 definitions:
+  data.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  data.LoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+    type: object
   model.User:
     properties:
       contact:
@@ -17,10 +34,34 @@ definitions:
         type: string
       registrationDate:
         type: string
+      username:
+        type: string
     type: object
 info:
   contact: {}
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the system
+      parameters:
+      - description: Login request
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/data.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/data.LoginResponse'
+      summary: Login
+      tags:
+      - Auth
   /users:
     get:
       consumes:
@@ -37,7 +78,7 @@ paths:
             type: array
       summary: Get all users
       tags:
-      - users
+      - Users
     post:
       consumes:
       - application/json
@@ -58,5 +99,5 @@ paths:
             $ref: '#/definitions/model.User'
       summary: Create a new user
       tags:
-      - users
+      - Users
 swagger: "2.0"

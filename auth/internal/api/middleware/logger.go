@@ -16,7 +16,7 @@ type responseBodyWriter struct {
 	body *bytes.Buffer
 }
 
-var pathsToHideRequestBody = []string{constants.UserRoutes}
+var pathsToHideRequestBody = []string{constants.UserRoutes, constants.AuthRoutes + "/login"}
 
 func shouldHideRequestBody(path string) bool {
 	path = strings.TrimRight(path, "/")

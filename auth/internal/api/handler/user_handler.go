@@ -20,7 +20,7 @@ func NewUserHandler(userService service.UserService) *UserHandler {
 // @Summary Get all users
 // @Schemes
 // @Description Get all users
-// @Tags users
+// @Tags Users
 // @Accept json
 // @Produce json
 // @Success 200 {array} model.User "List of all users"
@@ -29,16 +29,17 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 	log.Printf("initGetUsers")
 	users, err := h.userService.GetAllUsers()
 	if err != nil {
-		utils.ErrorResponse(c, "Failed to get users", err.Error())
+		utils.ErrorResponse(c, err.GetMessage(), err.ErrorDetails)
 		return
 	}
 	utils.DataSuccessResponse(c, "Users fetched successfully", users)
+
 }
 
 // @Summary Create a new user
 // @Schemes
 // @Description Create a new user
-// @Tags users
+// @Tags Users
 // @Accept json
 // @Produce json
 // @Param user body model.User true "User"
@@ -55,7 +56,7 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 
 	createdUser, err := h.userService.CreateUser(&user)
 	if err != nil {
-		utils.ErrorResponse(c, "Failed to create user", err.Error())
+		utils.ErrorResponse(c, err.GetMessage(), err.ErrorDetails)
 		return
 	}
 

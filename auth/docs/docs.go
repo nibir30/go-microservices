@@ -15,6 +15,40 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Login to the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Login request",
+                        "name": "loginRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/data.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "$ref": "#/definitions/data.LoginResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "description": "Get all users",
@@ -25,7 +59,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "Users"
                 ],
                 "summary": "Get all users",
                 "responses": {
@@ -49,7 +83,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "Users"
                 ],
                 "summary": "Create a new user",
                 "parameters": [
@@ -75,6 +109,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "data.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "data.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/model.User"
+                }
+            }
+        },
         "model.User": {
             "type": "object",
             "properties": {
@@ -100,6 +160,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "registrationDate": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

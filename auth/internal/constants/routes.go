@@ -7,4 +7,5 @@ const (
 
 	// User routes
 	UserRoutes = APIBasePathV1 + "/users"
+	AuthRoutes = APIBasePathV1 + "/auth"
 )

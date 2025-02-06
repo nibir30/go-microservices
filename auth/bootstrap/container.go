@@ -10,6 +10,7 @@ import (
 type Container struct {
 	UserRepo    repository.UserRepository
 	UserService service.UserService
+	AuthService service.AuthService
 
 	// Add other repositories and services as needed
 }
@@ -19,7 +20,7 @@ func NewContainer(db *gorm.DB) *Container {
 	return &Container{
 		UserRepo:    repository.NewUserRepository(db),
 		UserService: service.NewUserService(repository.NewUserRepository(db)),
-
+		AuthService: service.NewAuthService(repository.NewUserRepository(db)),
 		// Initialize more repositories and services here
 	}
 }
