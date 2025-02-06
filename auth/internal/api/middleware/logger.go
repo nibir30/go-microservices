@@ -56,7 +56,7 @@ func LogRequestAndResponse() gin.HandlerFunc {
 
 			if c.Request.Method == "POST" && shouldHideRequestBody(c.Request.URL.Path) {
 				log.Printf("Request: %s %s %s\nUser-Agent: %s\nTimezone: %s\nHeaders: %v\nRequest Body: %s",
-					c.Request.Method, c.Request.URL.Path, c.ClientIP(), userAgent, timezone, headers, string(bodyBytes))
+					c.Request.Method, c.Request.URL.Path, c.ClientIP(), userAgent, timezone, headers, "[HIDDEN]")
 
 			} else {
 				log.Printf("Request: %s %s %s\nUser-Agent: %s\nTimezone: %s\nHeaders: %v\nRequest Body: %s",

@@ -41,6 +41,7 @@ func InitializeApp() *App {
 	InitializeSwagger(router)
 
 	router.Use(middleware.LogRequestAndResponse())
+	router.Use(middleware.DefaultErrorHandler())
 
 	// Register routes with container services
 	routes.RegisterUserRoutes(router, container.UserService)

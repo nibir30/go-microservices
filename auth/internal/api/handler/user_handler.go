@@ -2,11 +2,11 @@ package handler
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/internal/model"
 	"github.com/nibir30/go-microservices/auth/internal/service"
+	"github.com/nibir30/go-microservices/auth/internal/utils"
 )
 
 type UserHandler struct {
@@ -29,10 +29,10 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 	log.Printf("initGetUsers")
 	users, err := h.userService.GetAllUsers()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, "Failed to get users", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"users": users})
+	utils.DataSuccessResponse(c, "Users fetched successfully", users)
 }
 
 // @Summary Create a new user
@@ -49,15 +49,15 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		utils.ErrorResponse(c, "Invalid input", err.Error())
 		return
 	}
 
 	createdUser, err := h.userService.CreateUser(&user)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		utils.ErrorResponse(c, "Failed to create user", err.Error())
 		return
 	}
 
-	c.JSON(http.StatusCreated, createdUser)
+	utils.DataSuccessResponse(c, "User created successfully", createdUser)
 }
