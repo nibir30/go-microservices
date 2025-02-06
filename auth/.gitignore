@@ -45,7 +45,3 @@ tmp/
 
 # Docker-related
 docker-compose.override.yml
-
-# Swagger
-docs/
-
