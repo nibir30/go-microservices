@@ -1,12 +1,14 @@
 package handler
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/internal/model"
 	"github.com/nibir30/go-microservices/auth/internal/service"
+	"github.com/nibir30/go-microservices/auth/internal/utils"
 )
 
 
@@ -24,7 +26,7 @@ func NewUserHandler(userService service.UserService) *UserHandler {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Success 200 {string} GetUsers
+// @Success 200 {array} model.User "List of all users"
 // @Router /users [get]
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	users, err := h.userService.GetAllUsers()
@@ -42,7 +44,7 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param user body model.User true "User"
-// @Success 200 {string} CreateUser
+// @Success 200 {object} model.User "User created successfully"
 // @Router /users [post]
 func (h *UserHandler) CreateUser(c *gin.Context) {
 	var user model.User
@@ -51,13 +53,25 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("User:", user)
+	userLog := user
+	userLog.Password = "[MASKED]"
+	log.Printf("Creating new user: %+v", userLog)
+
+
+	hashedPassword, err := utils.HashPassword(user.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		return
+	}
+
+	user.Password = hashedPassword
+	now := time.Now()
+	user.RegistrationDate = &now
 
 	if err := h.userService.CreateUser(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
-
 
 	c.JSON(http.StatusCreated, user)
 }

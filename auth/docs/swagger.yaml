@@ -3,27 +3,19 @@ definitions:
     properties:
       contact:
         type: string
-      created_at:
-        type: string
-      deleted_at:
-        type: string
       dob:
         type: string
       email:
         type: string
-      email_verified:
+      emailVerifiedYn:
         type: string
-      first_name:
+      firstName:
         type: string
       id:
         type: integer
-      last_name:
+      lastName:
         type: string
-      password:
-        type: string
-      registration_date:
-        type: string
-      updated_at:
+      registrationDate:
         type: string
     type: object
 info:
@@ -38,9 +30,11 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of all users
           schema:
-            type: string
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
       summary: Get all users
       tags:
       - users
@@ -59,9 +53,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: User created successfully
           schema:
-            type: string
+            $ref: '#/definitions/model.User'
       summary: Create a new user
       tags:
       - users

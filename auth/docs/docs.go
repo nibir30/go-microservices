@@ -30,9 +30,12 @@ const docTemplate = `{
                 "summary": "Get all users",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "List of all users",
                         "schema": {
-                            "type": "string"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.User"
+                            }
                         }
                     }
                 }
@@ -62,9 +65,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "User created successfully",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/model.User"
                         }
                     }
                 }
@@ -78,37 +81,25 @@ const docTemplate = `{
                 "contact": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
                 "dob": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
-                "email_verified": {
+                "emailVerifiedYn": {
                     "type": "string"
                 },
-                "first_name": {
+                "firstName": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "last_name": {
+                "lastName": {
                     "type": "string"
                 },
-                "password": {
-                    "type": "string"
-                },
-                "registration_date": {
-                    "type": "string"
-                },
-                "updated_at": {
+                "registrationDate": {
                     "type": "string"
                 }
             }
