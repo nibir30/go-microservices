@@ -10,7 +10,7 @@ import (
 func RegisterUserRoutes(router *gin.Engine, userService service.UserService) {
 	userHandler := handler.NewUserHandler(userService)
 
-	userRoutes := router.Group("/users")
+	userRoutes := router.Group("/api/v1/users")
 	{
 		userRoutes.GET("/", userHandler.GetUsers)
 		userRoutes.POST("/", userHandler.CreateUser)

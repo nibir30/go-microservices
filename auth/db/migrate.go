@@ -23,7 +23,7 @@ func MigrateDB(db *gorm.DB) {
 	// Initialize the migrate instance with the file-based migrations
 
 	m, err := migrate.New(
-		"file://../db/migrations", // Path to your migration files
+		"file://db/migrations", // Path to your migration files
 		dbURL,                   // Database connection URL
 	)
 

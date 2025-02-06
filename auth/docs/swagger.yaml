@@ -1,3 +1,33 @@
+definitions:
+  model.User:
+    properties:
+      contact:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      dob:
+        type: string
+      email:
+        type: string
+      email_verified:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      image_id:
+        type: integer
+      last_name:
+        type: string
+      password:
+        type: string
+      registration_date:
+        type: string
+      updated_at:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -5,7 +35,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: do ping
+      description: Get all users
       produces:
       - application/json
       responses:
@@ -13,7 +43,28 @@ paths:
           description: OK
           schema:
             type: string
-      summary: ping example
+      summary: Get all users
       tags:
-      - example
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create a new user
+      tags:
+      - users
 swagger: "2.0"

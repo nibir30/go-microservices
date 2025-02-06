@@ -16,13 +16,10 @@ func NewUserHandler(userService service.UserService) *UserHandler {
 	return &UserHandler{userService: userService}
 }
 
-// @BasePath /api/v1
-
-// PingExample godoc
-// @Summary ping example
+// @Summary Get all users
 // @Schemes
-// @Description do ping
-// @Tags example
+// @Description Get all users
+// @Tags users
 // @Accept json
 // @Produce json
 // @Success 200 {string} GetUsers
@@ -30,13 +27,21 @@ func NewUserHandler(userService service.UserService) *UserHandler {
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	users, err := h.userService.GetAllUsers()
 	if err != nil {
-
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"users": users})
 }
 
+// @Summary Create a new user
+// @Schemes
+// @Description Create a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body model.User true "User"
+// @Success 200 {string} CreateUser
+// @Router /users [post]
 func (h *UserHandler) CreateUser(c *gin.Context) {
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {
