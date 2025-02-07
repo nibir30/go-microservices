@@ -1,8 +1,6 @@
 package service
 
 import (
-	"time"
-
 	"github.com/nibir30/go-microservices/auth/internal/model"
 	"github.com/nibir30/go-microservices/auth/internal/model/common"
 	"github.com/nibir30/go-microservices/auth/internal/repository"
@@ -35,6 +33,7 @@ func (s *userService) GetAllUsers() ([]model.User, *common.CustomError) {
 func (s *userService) CreateUser(user *model.User) (*model.User, *common.CustomError) {
 	// Hash the password
 	hashedPassword, err := utils.HashPassword(user.Password)
+
 	if err != nil {
 		return nil, common.NewCustomError("Invalid password", err.Error())
 	}
@@ -49,10 +48,6 @@ func (s *userService) CreateUser(user *model.User) (*model.User, *common.CustomE
 	}
 
 	user.Password = hashedPassword
-
-	// Set the registration date
-	now := time.Now()
-	user.RegistrationDate = &now
 
 	// Call the repository to save the user
 	err = s.userRepo.CreateUser(user)
