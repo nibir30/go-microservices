@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/internal/api/handler"
+	"github.com/nibir30/go-microservices/auth/internal/api/middleware"
 	"github.com/nibir30/go-microservices/auth/internal/constants"
 	"github.com/nibir30/go-microservices/auth/internal/service"
 )
@@ -13,7 +14,7 @@ func RegisterUserRoutes(router *gin.Engine, userService service.UserService, aut
 
 	userRoutes := router.Group(constants.UserRoutes)
 	{
-		userRoutes.GET("/", userHandler.GetUsers)
+		userRoutes.GET("/", middleware.AuthMiddleware(), userHandler.GetUsers)
 		userRoutes.POST("/", userHandler.CreateUser)
 	}
 

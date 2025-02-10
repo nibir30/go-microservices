@@ -1,3 +1,4 @@
+basePath: /auth
 definitions:
   data.LoginRequest:
     properties:
@@ -35,8 +36,15 @@ definitions:
       username:
         type: string
     type: object
+host: localhost:8080
 info:
   contact: {}
+  description: This is the auth service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Auth Service API
+  version: "1.0"
 paths:
   /auth/login:
     post:
@@ -74,6 +82,8 @@ paths:
             items:
               $ref: '#/definitions/model.User'
             type: array
+      security:
+      - BearerAuth: []
       summary: Get all users
       tags:
       - Users
@@ -98,4 +108,9 @@ paths:
       summary: Create a new user
       tags:
       - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

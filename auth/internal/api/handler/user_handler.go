@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nibir30/go-microservices/auth/internal/model"
+	"github.com/nibir30/go-microservices/auth/internal/model/data"
 	"github.com/nibir30/go-microservices/auth/internal/service"
 	"github.com/nibir30/go-microservices/auth/internal/utils"
 )
@@ -25,9 +26,23 @@ func NewUserHandler(userService service.UserService) *UserHandler {
 // @Produce json
 // @Success 200 {array} model.User "List of all users"
 // @Router /users [get]
+// @Security BearerAuth
+// @in header
+// @name Authorization
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	log.Printf("initGetUsers")
+
+	jwtUser, exists := c.Get("jwtUser")
+
+	if !exists {
+		utils.ErrorResponse(c, "Unauthorized", "No token provided")
+		return
+	}
+
+	log.Printf(jwtUser.(data.JwtUser).Username)
+
 	users, err := h.userService.GetAllUsers()
+
 	if err != nil {
 		utils.ErrorResponse(c, err.GetMessage(), err.ErrorDetails)
 		return

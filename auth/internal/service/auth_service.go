@@ -1,10 +1,11 @@
 package service
 
 import (
-	"github.com/nibir30/go-microservices/auth/config"
+	jwtConfig "github.com/nibir30/go-microservices/auth/config/jwt"
 	"github.com/nibir30/go-microservices/auth/internal/model/common"
 	"github.com/nibir30/go-microservices/auth/internal/model/data"
 	"github.com/nibir30/go-microservices/auth/internal/repository"
+
 	passwordUtils "github.com/nibir30/go-microservices/auth/internal/utils/password"
 )
 
@@ -36,7 +37,7 @@ func (s *authService) Login(username, password string) (*data.LoginResponse, *co
 		return nil, common.ValidationError("Invalid password")
 	}
 
-	token, err := config.CreateToken(username)
+	token, err := jwtConfig.CreateToken(username)
 
 	if err != nil {
 		return nil, common.NewCustomError("Failed to create token", err.Error())
