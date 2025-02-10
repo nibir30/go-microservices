@@ -4,7 +4,7 @@ import (
 	"github.com/nibir30/go-microservices/auth/internal/model"
 	"github.com/nibir30/go-microservices/auth/internal/model/common"
 	"github.com/nibir30/go-microservices/auth/internal/repository"
-	"github.com/nibir30/go-microservices/auth/internal/utils"
+	passwordUtils "github.com/nibir30/go-microservices/auth/internal/utils/password"
 )
 
 type UserService interface {
@@ -32,8 +32,7 @@ func (s *userService) GetAllUsers() ([]model.User, *common.CustomError) {
 
 func (s *userService) CreateUser(user *model.User) (*model.User, *common.CustomError) {
 	// Hash the password
-	hashedPassword, err := utils.HashPassword(user.Password)
-
+	hashedPassword, err := passwordUtils.HashPassword(user.Password)
 	if err != nil {
 		return nil, common.NewCustomError("Invalid password", err.Error())
 	}

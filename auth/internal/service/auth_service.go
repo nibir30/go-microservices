@@ -5,7 +5,7 @@ import (
 	"github.com/nibir30/go-microservices/auth/internal/model/common"
 	"github.com/nibir30/go-microservices/auth/internal/model/data"
 	"github.com/nibir30/go-microservices/auth/internal/repository"
-	"github.com/nibir30/go-microservices/auth/internal/utils"
+	passwordUtils "github.com/nibir30/go-microservices/auth/internal/utils/password"
 )
 
 type AuthService interface {
@@ -27,7 +27,7 @@ func (s *authService) Login(username, password string) (*data.LoginResponse, *co
 		return nil, common.NewCustomError("User not found", err.Error())
 	}
 
-	valid, err := utils.VerifyPassword(password, user.Password)
+	valid, err := passwordUtils.VerifyPassword(password, user.Password)
 	if err != nil {
 		return nil, common.NewCustomError("Invalid password", err.Error())
 	}

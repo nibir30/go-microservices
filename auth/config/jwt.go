@@ -11,7 +11,7 @@ import (
 )
 
 func CreateToken(username string) (string, error) {
-	errorENV := godotenv.Load("../.env")
+	errorENV := godotenv.Load(".env")
 	if errorENV != nil {
 		panic("Failed to load env file")
 	}
@@ -23,7 +23,8 @@ func CreateToken(username string) (string, error) {
 			"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		})
 
-	tokenString, err := token.SignedString(secretKey)
+	// tokenString, err := token.SignedString(secretKey)
+	tokenString, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		return "", err
 	}

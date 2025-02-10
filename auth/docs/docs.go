@@ -159,9 +159,6 @@ const docTemplate = `{
                 "lastName": {
                     "type": "string"
                 },
-                "registrationDate": {
-                    "type": "string"
-                },
                 "username": {
                     "type": "string"
                 }

@@ -13,7 +13,7 @@ const AuthServicePort = ":8001"
 
 // ConnectDB connects go to mysql database
 func ConnectDB() *gorm.DB {
-	errorENV := godotenv.Load("../.env")
+	errorENV := godotenv.Load(".env")
 	if errorENV != nil {
 		panic("Failed to load env file")
 	}

@@ -32,8 +32,6 @@ definitions:
         type: integer
       lastName:
         type: string
-      registrationDate:
-        type: string
       username:
         type: string
     type: object
